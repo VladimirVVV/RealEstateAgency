@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 /**
  * Created by vladimir on 01.11.2016.
  */
+
+//ggggggggggg
 @Controller
 public class DefaultController {
     @RequestMapping("/")
