@@ -1,73 +1,88 @@
+DROP TABLE IF EXISTS `client`;
 
-
--- DROP DATABASE agency;
---drop SEQUENCE nxt_user_ids;
---drop SEQUENCE nxt_real_estate_ids;
---drop SEQUENCE nxt_estate_show_ids;
-
---DROP TABLE estate_show;
---DROP TABLE real_estate;
---DROP TABLE  users;
-
-
-
-CREATE DATABASE agency
-  WITH OWNER = postgres
-       ENCODING = 'UTF8'
-       TABLESPACE = pg_default
-       LC_COLLATE = 'Russian_Russia.1251'
-       LC_CTYPE = 'Russian_Russia.1251'
-       CONNECTION LIMIT = -1;
-
-CREATE SEQUENCE nxt_user_ids;
-
-CREATE TABLE users (
-  id bigint PRIMARY KEY DEFAULT NEXTVAL('nxt_user_ids'),
+CREATE TABLE `client` (
+  id BIGINT(20) NOT NULL AUTO_INCREMENT,
   surname VARCHAR(255) NOT NULL,
-  name VARCHAR(255) NOT NULL,
-  patr VARCHAR(255) NOT NULL
+  `name` VARCHAR(255) NOT NULL,
+  email VARCHAR(255),
+  birth_date DATE NOT NULL,
+  sex INT(1) NOT NULL,
+  PRIMARY KEY (id)
 );
 
-CREATE SEQUENCE nxt_real_estate_ids;
+DROP TABLE IF EXISTS account;
 
-CREATE TABLE real_estate
-(
-  id bigint  PRIMARY KEY DEFAULT NEXTVAL('nxt_real_estate_ids'),
-  addr VARCHAR(255) not null,
-  user_id bigint not null,
-  CONSTRAINT FK_REAL_EST_TO_USER FOREIGN KEY (user_id)
-      REFERENCES users (id) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION
- );
-
-
-
-CREATE SEQUENCE nxt_estate_show_ids;
-CREATE TABLE estate_show
-(
-  id bigint PRIMARY KEY DEFAULT NEXTVAL('nxt_estate_show_ids'),
-  client_name VARCHAR(255),
-  client_patr VARCHAR(255),
-  client_phone VARCHAR(255),
-  client_surname VARCHAR(255),
-  meeting_time timestamp without time zone,
-  estate_id bigint not null,
-  UNIQUE (estate_id, meeting_time),
-  CONSTRAINT FK_EST_SHOW_TO_REAL_EST FOREIGN KEY (estate_id)
-      REFERENCES real_estate (id) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION
+CREATE TABLE account (
+  id BIGINT(20) NOT NULL AUTO_INCREMENT,
+  client_id BIGINT(20) NOT NULL,
+  created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  balance BIGINT(20) NOT NULL DEFAULT '0',
+  active INT(1) NOT NULL DEFAULT 1,
+  block_dt DATETIME,
+  PRIMARY KEY (id),
+  FOREIGN KEY (client_id) REFERENCES `client`(id)
+  ON DELETE CASCADE 
 );
+-------------------------------------------------------------------------
+DROP VIEW IF EXISTS v_account_info;
+CREATE VIEW v_account_info(client_id, acc_qty, total_balance) AS
+SELECT
+	client_id, COUNT(1) acc_qty, SUM(balance) total_balance
+FROM
+	account
+WHERE
+	active =1
+GROUP BY client_id;
+
+DROP VIEW IF EXISTS v_client_info;
+CREATE VIEW v_client_info(id, `name`, surname, email, age, sex, acc_qty, total_balance) AS
+SELECT
+	c.id, c.name, c.surname, c.email,
+	FLOOR(DATEDIFF(CURRENT_DATE, c.birth_date)/365) AS age,
+	sex, acc.acc_qty, acc.total_balance
+FROM
+	`client` c,
+	v_account_info acc
+WHERE
+	c.id = acc.client_id;
+
+DROP VIEW IF EXISTS v_client_account_list;
+CREATE VIEW v_client_account_list(client_id, `name`, surname, email, created, account_id, balance, active, block_dt) AS
+SELECT
+	c.id client_id, c.name, c.surname, c.email,
+	acc.created, acc.id account_id,
+	acc.balance, acc.active,
+	acc.block_dt
+FROM
+	`client` c
+LEFT JOIN
+	account acc
+ON c.id = acc.client_id
+WHERE
+	c.id = acc.client_id;
 
 
-insert into users(surname, name, patr) values('Марычев', 'Иван', 'Иванович');
-insert into users(surname, name, patr) values('Иванов', 'Петр', 'Иванович');
-insert into users(surname, name, patr) values('Петров', 'Андрей', 'Алексеевич');
 
-insert into real_estate(addr, user_id) values('Киев, пр. Шурика 10,д.11 ', 3);
-insert into real_estate(addr, user_id) values('Киев, ул. Кленовая 14,д.7 ', 1);
-insert into real_estate(addr, user_id) values('Киев, ул. Зеленая 9а,д.5 ', 2);
+-------------------------------------------------------------------------
+INSERT INTO CLIENT(id, surname, `name`, email, birth_date, sex)
+VALUES(1, 'Doe', 'John', 'john@gmail.com', STR_TO_DATE('10-12-1980','%d-%m-%Y'), 1);
+INSERT INTO CLIENT(id, surname, `name`, email, birth_date, sex)
+VALUES(2, 'Joanna', 'Middlestone', 'joanna@gmail.com', STR_TO_DATE('10-04-1991','%d-%m-%Y'), 0);
+INSERT INTO CLIENT(id, surname, `name`, email, birth_date, sex)
+VALUES(3, 'Kate', 'Richardson', 'kate@gmail.com', STR_TO_DATE('10-04-1989','%d-%m-%Y'), 0);
 
-insert into estate_show(client_surname, client_name, client_patr, client_phone, estate_id, meeting_time) values('Марычев', 'Иван', 'Иванович', '0994557777', 2, '2016-11-01 14:04');
-insert into estate_show(client_surname, client_name, client_patr, client_phone, estate_id, meeting_time) values('Иванов', 'Петр', 'Иванович', '0958664455', 2, '2016-11-01 14:24');
-insert into estate_show(client_surname, client_name, client_patr, client_phone, estate_id, meeting_time) values('Петров', 'Андрей', 'Алексеевич', '0667775533',3,'2016-11-01 14:04');
+COMMIT;
+
+
+INSERT INTO account(client_id, balance)
+VALUES(1, 400);
+INSERT INTO account(client_id, balance)
+VALUES(1, 700);
+
+INSERT INTO account(client_id, balance)
+VALUES(2, 7000);
+
+INSERT INTO account(client_id, balance)
+VALUES(3, 9020);
+COMMIT;
 
