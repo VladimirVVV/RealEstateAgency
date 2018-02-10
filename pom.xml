@@ -15,12 +15,14 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
 
-        <spring.version>5.0.2.RELEASE</spring.version>
-        <!--<spring.version>4.3.3.RELEASE</spring.version>-->
-        <mysql.version>6.0.6</mysql.version>
+        <!--<spring.version>5.0.2.RELEASE</spring.version>-->
+        <!--<spring.version>3.2.18.RELEASE</spring.version>-->
+        <spring.version>4.3.3.RELEASE</spring.version>
+        <mysql.version>5.1.39</mysql.version>
         <slf4j.version>1.6.6</slf4j.version>
         <struts1.version>1.3.10</struts1.version>
-        <spring.struts1.version>3.2.18.RELEASE</spring.struts1.version>
+        <displaytag.version>1.2</displaytag.version>
+        <!--<spring.struts1.version>4.0.0.RELEASE</spring.struts1.version>-->
     </properties>
     <dependencies>
         <dependency>
@@ -30,6 +32,13 @@
             <scope>test</scope>
         </dependency>
 
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.7</version>
+        </dependency>
+
+
         <!-- Struts 1 -->
         <dependency>
             <groupId>org.apache.struts</groupId>
@@ -38,16 +47,15 @@
         </dependency>
 
         <dependency>
+            <groupId>org.apache.struts</groupId>
+            <artifactId>struts-taglib</artifactId>
+            <version>${struts1.version}</version>
+        </dependency>
+
+        <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>${mysql.version}</version>
-        </dependency>
-
-
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-struts</artifactId>
-            <version>${spring.struts1.version}</version>
         </dependency>
 
         <!-- Spring -->
@@ -59,17 +67,32 @@
 
         <dependency>
             <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-beans</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
             <version>${spring.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.springframework</groupId>
-            <artifactId>spring-webmvc</artifactId>
-            <version>${spring.version}</version>
+            <artifactId>spring-struts</artifactId>
+            <version>3.2.18.RELEASE</version>
         </dependency>
-
-
+        <!--<dependency>-->
+        <!--<groupId>org.springframework</groupId>-->
+        <!--<artifactId>spring-webmvc</artifactId>-->
+        <!--<version>${spring.version}</version>-->
+        <!--</dependency>-->
 
 
         <dependency>
@@ -78,12 +101,16 @@
             <version>${spring.version}</version>
         </dependency>
 
+        <!--<dependency>-->
+        <!--<groupId>org.springframework</groupId>-->
+        <!--<artifactId>spring-orm</artifactId>-->
+        <!--<version>${spring.version}</version>-->
+        <!--</dependency>-->
         <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-orm</artifactId>
-            <version>${spring.version}</version>
+            <groupId>displaytag</groupId>
+            <artifactId>displaytag</artifactId>
+            <version>${displaytag.version}</version>
         </dependency>
-
 
         <!-- Servlet API, JSTL -->
         <dependency>
@@ -98,16 +125,16 @@
             <version>1.2</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>${slf4j.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-log4j12</artifactId>
-            <version>${slf4j.version}</version>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.slf4j</groupId>-->
+            <!--<artifactId>slf4j-api</artifactId>-->
+            <!--<version>${slf4j.version}</version>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>org.slf4j</groupId>-->
+            <!--<artifactId>slf4j-log4j12</artifactId>-->
+            <!--<version>${slf4j.version}</version>-->
+        <!--</dependency>-->
 
     </dependencies>
 

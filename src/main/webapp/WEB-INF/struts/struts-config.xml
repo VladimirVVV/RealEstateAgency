@@ -4,20 +4,42 @@
         "http://jakarta.apache.org/struts/dtds/struts-config_1_3.dtd">
 
 <struts-config>
+    <form-beans>
+        <form-bean name="testJsonForm"
+                   type="com.emm.struts.form.TestJsonForm"/>
+    </form-beans>
 
 
-    <!--<form-beans>-->
-        <!--<form-bean name="helloWorldForm"-->
-                   <!--type="com.mkyong.common.form.HelloWorldForm"/>-->
-    <!--</form-beans>-->
+	<action-mappings>
 
-    <!--<action-mappings>-->
-        <!--<action path="/helloWorld"-->
-                <!--type="com.mkyong.common.action.HelloWorldAction"-->
-                <!--name="helloWorldForm">-->
-            <!--<forward name="success" path="/HelloWorld.jsp"/>-->
+		<action path="/helloWorld"
+			type="com.emm.struts.action.HelloWorldAction"
+			name="testJsonForm">
+			<forward name="success" path="/WEB-INF/jsp/HelloWorld.jsp"/>
 
-        <!--</action>-->
-    <!--</action-mappings>-->
+		</action>
+		<!--<action-->
+			<!--path="/Submit"-->
+			<!--type="com.emm.struts.action.JSONAction"-->
+			<!--validate="false"-->
+			<!--name="testJsonForm">-->
+			<!--<forward name="success" path="/JsonResponse.jsp"/>-->
+		<!--</action>-->
+
+		<!--<action-->
+			<!--path="/jsonData"-->
+			<!--type="com.emm.struts.action.JSONAction"-->
+			<!--parameter="method"-->
+			<!--validate="false"-->
+			<!--name="testJsonForm">-->
+			<!--<forward name="success" path="/JsonResponse.jsp"/>-->
+		<!--</action>-->
+
+
+	</action-mappings>
+    <plug-in className="org.springframework.web.struts.ContextLoaderPlugIn">
+        <set-property property="contextConfigLocation"
+                      value="/WEB-INF/spring/SpringContext.xml" />
+    </plug-in>
 
 </struts-config>
