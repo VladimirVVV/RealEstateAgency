@@ -37,6 +37,11 @@
 
 
 	</action-mappings>
+    <controller>
+        <set-property property="processorClass"
+                      value="org.springframework.web.struts.AutowiringRequestProcessor" />
+    </controller>
+
     <plug-in className="org.springframework.web.struts.ContextLoaderPlugIn">
         <set-property property="contextConfigLocation"
                       value="/WEB-INF/spring/SpringContext.xml" />
