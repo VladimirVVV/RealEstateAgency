@@ -22,6 +22,7 @@
         <slf4j.version>1.6.6</slf4j.version>
         <struts1.version>1.3.10</struts1.version>
         <displaytag.version>1.2</displaytag.version>
+        <xwork.version>2.3.34</xwork.version>
         <!--<spring.struts1.version>4.0.0.RELEASE</spring.struts1.version>-->
     </properties>
     <dependencies>
@@ -106,6 +107,14 @@
         <!--<artifactId>spring-orm</artifactId>-->
         <!--<version>${spring.version}</version>-->
         <!--</dependency>-->
+        <dependency>
+            <groupId>org.apache.struts.xwork</groupId>
+            <artifactId>xwork-core</artifactId>
+            <version>${xwork.version}</version>
+        </dependency>
+
+
+
         <dependency>
             <groupId>displaytag</groupId>
             <artifactId>displaytag</artifactId>
