@@ -7,6 +7,10 @@
     <form-beans>
         <form-bean name="testJsonForm"
                    type="com.emm.struts.form.TestJsonForm"/>
+        <form-bean name="dynaClientListForm"
+                   type="org.apache.struts.action.DynaActionForm">
+            <form-property name="clientList" type="java.util.List"/>
+        </form-bean>
     </form-beans>
 
 
@@ -18,6 +22,18 @@
 			<forward name="success" path="/WEB-INF/jsp/HelloWorld.jsp"/>
 
 		</action>
+		<!--<action path="/clientInfo"-->
+			<!--type="com.emm.struts.action.ClientInfoAction"-->
+			<!-->-->
+			<!--<forward name="success" path="/WEB-INF/jsp/ClientInfoList.jsp"/>-->
+
+		<!--</action>-->
+
+        <action path="/clientInfo" name="dynaClientListForm"
+                type="com.emm.struts.action.ClientInfoAction" scope="request"
+                validate="false">
+            <forward name="success" path="/WEB-INF/jsp/ClientInfoList.jsp" />
+        </action>
 		<!--<action-->
 			<!--path="/Submit"-->
 			<!--type="com.emm.struts.action.JSONAction"-->
@@ -44,7 +60,7 @@
 
     <plug-in className="org.springframework.web.struts.ContextLoaderPlugIn">
         <set-property property="contextConfigLocation"
-                      value="/WEB-INF/spring/SpringContext.xml" />
+                      value="/WEB-INF/spring/spring-context.xml" />
     </plug-in>
 
 </struts-config>

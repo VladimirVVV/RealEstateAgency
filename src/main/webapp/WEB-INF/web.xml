@@ -9,7 +9,7 @@
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>
-            /WEB-INF/spring/SpringContext.xml
+            /WEB-INF/spring/spring-context.xml
         </param-value>
     </context-param>
     <listener>

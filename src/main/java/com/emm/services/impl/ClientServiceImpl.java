@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by vladimir on 01.11.2016.
@@ -29,4 +30,10 @@ public class ClientServiceImpl implements ClientService {
     public List<Client> list() {
         return dao.findAll();
     }
+
+    @Override
+    public List<Map<String, String>> clientInfoList() {
+        return dao.clientInfoList();
+    }
+
 }

@@ -9,8 +9,11 @@ import org.springframework.stereotype.Service;
 
 import javax.sql.DataSource;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by vladimir on 07.02.2018.
@@ -28,6 +31,27 @@ public class ClientDaoImpl extends AbstractEntityDAO implements ClientDao {
                 query("SELECT * FROM client",
                         new ClientMapper()
                 );
+        return clients;
+    }
+
+    @Override
+    public List<Map<String, String>> clientInfoList() {
+        List<Map<String, String>> clients = getJdbcTemplate().
+                query("SELECT id, name, surname, email, age, sex, acc_qty," +
+                                " total_balance FROM v_client_info",
+                        (resultSet, j) -> {
+                            ResultSetMetaData meta = resultSet.getMetaData();
+                            Map map = new HashMap();
+                            for (int i = 1; i <= meta.getColumnCount(); i++) {
+                                String key = meta.getColumnName(i);
+                                String value = resultSet.getString(key);
+                                map.put(key, value);
+                            }
+
+                            return map;
+                        }
+                );
+
         return clients;
     }
 
