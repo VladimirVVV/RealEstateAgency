@@ -36,4 +36,10 @@ public class ClientServiceImpl implements ClientService {
         return dao.clientInfoList();
     }
 
+    @Transactional
+    @Override
+    public void delete(Long id) {
+        dao.delete(id);
+    }
+
 }

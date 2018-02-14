@@ -13,4 +13,5 @@ public interface ClientDao {
     List<Map<String, String>> clientInfoList();
     void insert(Client client);
     void update(Client client);
+    void delete(Long id);
 }

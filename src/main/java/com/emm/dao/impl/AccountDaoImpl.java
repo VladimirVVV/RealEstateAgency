@@ -4,6 +4,7 @@ import com.emm.dao.AccountDao;
 import com.emm.entities.Account;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Service;
 
 import javax.sql.DataSource;
 import java.sql.ResultSet;
@@ -16,6 +17,7 @@ import java.util.Map;
 /**
  * Created by vladimir on 11.02.2018.
  */
+@Service
 public class AccountDaoImpl extends AbstractEntityDAO implements AccountDao {
     @Autowired
     public AccountDaoImpl(DataSource dataSource) {

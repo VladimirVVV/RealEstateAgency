@@ -11,6 +11,7 @@
                    type="org.apache.struts.action.DynaActionForm">
             <form-property name="clientList" type="java.util.List"/>
         </form-bean>
+        <form-bean name="clientActForm" type="com.emm.struts.form.ClientForm" />
     </form-beans>
 
 
@@ -34,7 +35,20 @@
                 validate="false">
             <forward name="success" path="/WEB-INF/jsp/ClientInfoList.jsp" />
         </action>
-		<!--<action-->
+
+        <action path="/clientActInfo" name="clientActForm"
+                type="com.emm.struts.action.ClientInfoMethodAction" parameter="method" scope="request"
+                validate="false">
+            <forward name="success" path="/clientInfo.do" />
+            <forward name="add_account" path="/WEB-INF/jsp/AddAccount.jsp" />
+        </action>
+
+        <action path="/saveAccount" name=""
+                scope="request"
+                validate="false">
+            <forward name="success" path="/WEB-INF/jsp/AddAccount.jsp" />
+        </action>
+        <!--<action-->
 			<!--path="/Submit"-->
 			<!--type="com.emm.struts.action.JSONAction"-->
 			<!--validate="false"-->

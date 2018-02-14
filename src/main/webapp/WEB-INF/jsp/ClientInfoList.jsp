@@ -19,6 +19,13 @@
     <link rel="stylesheet" type="text/css" href="static/css/screen.css">
     <link rel="stylesheet" type="text/css" href="static/css/site.css">
     <link rel="stylesheet" type="text/css" href="static/css/teststyles.css">
+    <script type="text/javascript">
+        function submitForm()
+        {
+            document.forms[0].action = "/clientActInfo.do?method=addAccount"
+            document.forms[0].submit();
+        }
+    </script>
 </head>
 
 <body>
@@ -33,8 +40,14 @@
     <display:column property="acc_qty" title="Account quantity" sortable="true"  />
     <display:column property="total_balance" title="Total" sortable="true"  />
     <display:column title="Action">
-        <html:submit value="create account"/>
-        <html:submit value="delete" />
+        <html:form action="/clientActInfo.do">
+            <html:hidden property="id" value="${client.id}" />
+            <html:submit value="add account" onclick="submitForm()" />
+            <html:submit value="delete" property="method" />
+        </html:form>
+        <%--<html:form action="clientInfo.do?action=delete">--%>
+            <%--<html:submit value="delete" />--%>
+        <%--</html:form>--%>
     </display:column>
 </display:table>
 

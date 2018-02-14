@@ -12,4 +12,5 @@ public interface ClientService {
     boolean create(Client client);
     List<Client> list();
     List<Map<String, String>> clientInfoList();
+    void delete(Long id);
 }

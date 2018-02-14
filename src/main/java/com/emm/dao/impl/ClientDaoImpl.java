@@ -83,6 +83,13 @@ public class ClientDaoImpl extends AbstractEntityDAO implements ClientDao {
                 });
     }
 
+    @Override
+    public void delete(Long id) {
+        getJdbcTemplate().update(
+                "delete from client where id = ?",
+                new Object[]{id});
+    }
+
     private class ClientMapper implements RowMapper<Client> {
         @Override
         public Client mapRow(ResultSet rs, int rowNum)
